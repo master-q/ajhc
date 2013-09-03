@@ -10,7 +10,7 @@ getopts('c');
 my $mod = shift @ARGV;
 $mod =~ s/^.*\///;
 
-print "module $mod where\n\n";
+print "module Jhc.$mod where\n\n";
 print "import Data.ByteString.Unsafe\n";
 print "import Data.ByteString\n";
 print "import System.IO.Unsafe\n\n";

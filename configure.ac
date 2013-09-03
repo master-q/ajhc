@@ -98,5 +98,5 @@ AC_SUBST(VERSION)
 AC_SUBST(VERSION_MAJOR)
 AC_SUBST(VERSION_MINOR)
 AC_SUBST(VERSION_PATCH)
-AC_CONFIG_FILES([Makefile ajhc.spec src/hs_src_config.h src/Version/Config.hs docs/building.mkd src/cbits/config.h src/data/targets.ini ajhc.cabal Makefile.cabalinst src/Support/Cabal.hs Setup.hs])
+AC_CONFIG_FILES([Makefile ajhc.spec src/Jhc/hs_src_config.h src/Jhc/Version/Config.hs docs/building.mkd src/Jhc/cbits/config.h src/Jhc/data/targets.ini ajhc.cabal Makefile.cabalinst src/Jhc/Support/Cabal.hs Setup.hs])
 AC_OUTPUT

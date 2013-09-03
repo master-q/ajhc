@@ -1,0 +1,13 @@
+{-# LANGUAGE CPP #-}
+module Jhc.Support.Cabal (getDataFileNameMaybe) where
+#ifdef WITH_CABAL
+import Paths_@PACKAGE_NAME@ (getDataFileName)
+#endif
+
+getDataFileNameMaybe :: FilePath -> IO (Maybe FilePath)
+#ifdef WITH_CABAL
+getDataFileNameMaybe s = do f <- getDataFileName s
+                            return $ Just f
+#else
+getDataFileNameMaybe _ = return Nothing
+#endif

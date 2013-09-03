@@ -26,7 +26,7 @@ import System.FilePath ((</>))
 import Network.URI (parseURI)
 import Distribution.Client.HttpUtils (downloadURI)
 import Distribution.Verbosity (verbose)
-import GenUtil (iocatch)
+import Jhc.GenUtil (iocatch)
 
 main :: IO ()
 main = getArgs >>= mainWorker

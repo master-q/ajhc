@@ -12,7 +12,7 @@ while(<>) {
     push @props, $_;
 }
 
-print "module Info.Properties where\n\n";
+print "module Jhc.Info.Properties where\n\n";
 
 my @props_ = @props;
 

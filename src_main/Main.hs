@@ -9,26 +9,26 @@ import System.FilePath as FP
 import System.IO
 import qualified Data.ByteString.Lazy as LBS
 
-import DataConstructors
-import E.Main
-import E.Program
-import E.Rules
-import E.Type
-import FrontEnd.Class
-import Grin.Main(compileToGrin)
-import Grin.Show(render)
-import Ho.Build
-import Ho.Collected
-import Ho.Library
-import Name.Name
-import Options
-import StringTable.Atom
-import Support.TempDir
-import Util.Gen
-import Util.SetLike as S
-import Version.Version(versionSimple)
-import qualified FlagDump as FD
-import qualified Interactive
+import Jhc.DataConstructors
+import Jhc.E.Main
+import Jhc.E.Program
+import Jhc.E.Rules
+import Jhc.E.Type
+import Jhc.FrontEnd.Class
+import Jhc.Grin.Main(compileToGrin)
+import Jhc.Grin.Show(render)
+import Jhc.Ho.Build
+import Jhc.Ho.Collected
+import Jhc.Ho.Library
+import Jhc.Name.Name
+import Jhc.Options
+import Jhc.StringTable.Atom
+import Jhc.Support.TempDir
+import Jhc.Util.Gen
+import Jhc.Util.SetLike as S
+import Jhc.Version.Version(versionSimple)
+import qualified Jhc.FlagDump as FD
+import qualified Jhc.Interactive
 
 main = wrapMain $ do
     hSetEncoding stdout utf8

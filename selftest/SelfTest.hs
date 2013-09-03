@@ -12,22 +12,22 @@ import qualified Data.Set as Set
 import qualified Data.List
 
 import Data.Binary
-import E.Arbitrary
-import E.E
-import FrontEnd.HsSyn
-import GenUtil
-import Info.Binary()
-import Info.Types
-import Name.Name
-import Name.Names
-import PackedString
-import StringTable.Atom
-import Util.HasSize
-import Util.SetLike
-import qualified C.Generate
-import qualified Cmm.Op as Op
-import qualified Data.ByteString as BS
-import qualified Info.Info as Info
+import Jhc.E.Arbitrary
+import Jhc.E.E
+import Jhc.FrontEnd.HsSyn
+import Jhc.GenUtil
+import Jhc.Info.Binary()
+import Jhc.Info.Types
+import Jhc.Name.Name
+import Jhc.Name.Names
+import Jhc.PackedString
+import Jhc.StringTable.Atom
+import Jhc.Util.HasSize
+import Jhc.Util.SetLike
+import qualified Jhc.C.Generate
+import qualified Jhc.Cmm.Op as Op
+import qualified Jhc.Data.ByteString as BS
+import qualified Jhc.Info.Info as Info
 
 {-# NOINLINE main #-}
 main :: IO ()

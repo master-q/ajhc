@@ -78,7 +78,7 @@ foreach (@l) {
 }
 @ds = sort @ds;
 
-print "module $name(Flag(..),process,helpMsg,helpFlags) where\n\n";
+print "module Jhc.$name(Flag(..),process,helpMsg,helpFlags) where\n\n";
 print "import qualified Data.Set as Set\n";
 print "\n";
 print "-- | Flags\n";

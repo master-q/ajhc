@@ -1,7 +1,7 @@
 import Control.Monad.Writer
 import qualified Data.Map as Map
 
-import Util.UnionSolve
+import Jhc.Util.UnionSolve
 
 main = do
     runTest test1

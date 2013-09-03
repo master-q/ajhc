@@ -1,25 +1,25 @@
 ACLOCAL_AMFLAGS=-I ac-macros
 
-BUILT_SOURCES= src/RawFiles.hs src/FrontEnd/HsParser.hs src/FlagDump.hs \
-	       src/FlagOpts.hs src/Name/Prim.hs src/Info/Properties.hs
+BUILT_SOURCES= src/Jhc/RawFiles.hs src/Jhc/FrontEnd/HsParser.hs src/Jhc/FlagDump.hs \
+	       src/Jhc/FlagOpts.hs src/Jhc/Name/Prim.hs src/Jhc/Info/Properties.hs
 
-MY_CINCLUDES= -I$(srcdir)/src/data -I$(srcdir)/src/StringTable -I$(srcdir)/src/cbits -I$(builddir)/src/cbits
+MY_CINCLUDES= -I$(srcdir)/src/Jhc/data -I$(srcdir)/src/Jhc/StringTable -I$(srcdir)/src/Jhc/cbits -I$(builddir)/src/Jhc/cbits
 
 dist-hook: $(BUILT_SOURCES)
 	if test -f .git; then \
-		rm -f $(srcdir)/ChangeLog $(srcdir)/src/data/shortchange.txt; \
-		$(MAKE) ChangeLog src/data/shortchange.txt src/RawFiles.hs;   \
+		rm -f $(srcdir)/ChangeLog $(srcdir)/src/Jhc/data/shortchange.txt; \
+		$(MAKE) ChangeLog src/Jhc/data/shortchange.txt src/Jhc/RawFiles.hs;   \
 		cp -f $(srcdir)/ChangeLog $(destdir)/ChangeLog; \
-		cp -f $(srcdir)/src/data/shortchange.txt $(destdir)/src/data/shortchange.txt; \
-		cp -f $(srcdir)/src/RawFiles.hs $(destdir)/src/RawFiles.hs; \
+		cp -f $(srcdir)/src/Jhc/data/shortchange.txt $(destdir)/src/Jhc/data/shortchange.txt; \
+		cp -f $(srcdir)/src/Jhc/RawFiles.hs $(destdir)/src/Jhc/RawFiles.hs; \
 	fi
 
 all-local: cabal-build
 install-data-hook: cabal-install
 
-RAWFILES = src/data/ViaGhc.hs src/data/prelude.m4 \
-	   src/data/targets.ini rts/rts/constants.h rts/rts/stableptr.c rts/rts/stableptr.h rts/sys/queue.h rts/HsFFI.h \
-           rts/sys/wsize.h rts/sys/bitarray.h ChangeLog src/data/shortchange.txt rts/rts/slub.c \
+RAWFILES = src/Jhc/data/ViaGhc.hs src/Jhc/data/prelude.m4 \
+	   src/Jhc/data/targets.ini rts/rts/constants.h rts/rts/stableptr.c rts/rts/stableptr.h rts/sys/queue.h rts/HsFFI.h \
+           rts/sys/wsize.h rts/sys/bitarray.h ChangeLog src/Jhc/data/shortchange.txt rts/rts/slub.c \
 	   rts/rts/gc_jgc.c rts/rts/gc_jgc.h rts/rts/profile.c rts/rts/profile.h rts/rts/cdefs.h rts/rts/rts_support.c \
 	   rts/rts/rts_support.h rts/rts/gc.h rts/rts/gc_none.c rts/rts/gc_none.h rts/rts/jhc_rts.c rts/rts/jhc_rts.h \
 	   rts/lib/lib_cbits.c rts/jhc_rts_header.h rts/lib/lib_cbits.h rts/rts/gc_jgc_internal.h \
@@ -38,35 +38,35 @@ install-exec-hook: cabal-install
 %.mkd: %.flags utils/opt_sets.prl
 	perl $(srcdir)/utils/opt_sets.prl -f f -m -n $< $< > $@
 
-src/Info/Properties.hs: src/data/props.txt utils/gen_props.prl
+src/Jhc/Info/Properties.hs: src/Jhc/data/props.txt utils/gen_props.prl
 	perl $(srcdir)/utils/gen_props.prl $< > $@ || rm -f $@
 
-src/Name/Prim.hs: utils/op_names.prl src/data/names.txt
+src/Jhc/Name/Prim.hs: utils/op_names.prl src/Jhc/data/names.txt
 	perl $< > $@ || rm -f $@
 
-src/RawFiles.hs: $(RAWFILES)
+src/Jhc/RawFiles.hs: $(RAWFILES)
 	perl $(srcdir)/utils/op_raw.prl $(basename $@) $^ > $@
 
-src/FrontEnd/HsParser.hs: src/FrontEnd/HsParser.y
+src/Jhc/FrontEnd/HsParser.hs: src/Jhc/FrontEnd/HsParser.y
 	happy -a -g -c $< -o $@
 
-.SECONDARY: src/data/shortchange.txt
+.SECONDARY: src/Jhc/data/shortchange.txt
 
 ChangeLog:
 	git log fork-jhc-0.8.0-darcs20120314.. > $@
 
-src/data/shortchange.txt: ChangeLog
+src/Jhc/data/shortchange.txt: ChangeLog
 	echo -n "`head -1 $< | sed -ne 's/^commit \(.*\)/\1/p'`"  > $@
 
 # cabal wrapper
-cabal-dist: $(BUILT_SOURCES) src/StringTable/Atom.hs 
+cabal-dist: $(BUILT_SOURCES) src/Jhc/StringTable/Atom.hs 
 	runhaskell Setup.hs sdist
 
-cabal-build: $(BUILT_SOURCES) src/StringTable/Atom.hs
+cabal-build: $(BUILT_SOURCES) src/Jhc/StringTable/Atom.hs
 	cabal configure
 	cabal build
 
-cabal-setup: $(BUILT_SOURCES) src/StringTable/Atom.hs
+cabal-setup: $(BUILT_SOURCES) src/Jhc/StringTable/Atom.hs
 
 cabal-install:
 	cabal install
@@ -92,10 +92,10 @@ clean-local:
 	$(MAKE) -C selftest clean
 	$(MAKE) -C rts/test clean
 
-CLEANFILES= $(JHC_LIBS) $(JHC_EXT_LIBS) HelloWorld Primes src/StringTable/Atom.hs src/RawFiles.hs
-CLEANFILES+= ajhc.spec manual.html manual.mkd manual_ja.html manual_ja.mkd docs/building.mkd src/FlagDump.mkd src/FlagOpts.mkd
-CLEANFILES+= src/FlagDump.hs src/FlagOpts.hs src/FrontEnd/HsParser.hs src/Info/Properties.hs src/Name/Prim.hs
-CLEANFILES+= src/data/shortchange.txt ChangeLog ajhc.1 *.hl
+CLEANFILES= $(JHC_LIBS) $(JHC_EXT_LIBS) HelloWorld Primes src/Jhc/StringTable/Atom.hs src/Jhc/RawFiles.hs
+CLEANFILES+= ajhc.spec manual.html manual.mkd manual_ja.html manual_ja.mkd docs/building.mkd src/Jhc/FlagDump.mkd src/Jhc/FlagOpts.mkd
+CLEANFILES+= src/Jhc/FlagDump.hs src/Jhc/FlagOpts.hs src/Jhc/FrontEnd/HsParser.hs src/Jhc/Info/Properties.hs src/Jhc/Name/Prim.hs
+CLEANFILES+= src/Jhc/data/shortchange.txt ChangeLog ajhc.1 *.hl
 
 # docs
 %.pdf: %.ps
@@ -118,7 +118,7 @@ publish: docs/building.shtml docs/big-picture.pdf docs/development.shtml docs/in
 publish_ajhc: manual.html manual_ja.html docs/manual.css
 	cp -- $^ /home/kiwamu/doc/ajhc.github.com/
 
-publish_haddock: $(BUILT_SOURCES) src/StringTable/Atom.hs
+publish_haddock: $(BUILT_SOURCES) src/Jhc/StringTable/Atom.hs
 	cabal configure
 	cabal haddock --hyperlink-source --html
 	rm -rf /home/kiwamu/doc/ajhc.github.com/api
@@ -146,7 +146,7 @@ ajhc_man.mkd: $(JHC_MANUAL_FILES)
 ajhc.1: ajhc_man.mkd
 	pandoc $< -s -f markdown -t man -s  -o $@
 
-options.mkd: src/Options.hs cabal-build
+options.mkd: src/Jhc/Options.hs cabal-build
 	echo "{-@Options 1" > $@
 	./dist/build/ajhc/ajhc --help | sed -e 's/^/    /'  >> $@
 
@@ -158,8 +158,8 @@ show_elibs: lib/ext/*.cabal  lib/ext/*.yaml
 	-perl utils/build_extlibs.prl -l $^
 
 JHC_MANUAL_FILES = docs/make.mkd options.mkd docs/dependency_format.mkd docs/pragmas.mkd docs/differences.mkd \
-	docs/unboxed.mkd rts/rts/jhc_rts.c src/FlagOpts.mkd src/FlagDump.mkd src/E/PrimOpt.hs \
-	src/E/TypeCheck.hs src/Options.hs
+	docs/unboxed.mkd rts/rts/jhc_rts.c src/Jhc/FlagOpts.mkd src/Jhc/FlagDump.mkd src/Jhc/E/PrimOpt.hs \
+	src/Jhc/E/TypeCheck.hs src/Jhc/Options.hs
 
 regress: cabal-build
 	mkdir -p regress/results/dummy
@@ -168,7 +168,7 @@ regress: cabal-build
 	ln -sf regress/results/dummy regress/results/latest
 	./regress/regress.prl
 
-selftest: $(BUILT_SOURCES) src/StringTable/Atom.hs
+selftest: $(BUILT_SOURCES) src/Jhc/StringTable/Atom.hs
 	$(MAKE) -C selftest test
 
 rtstest:
