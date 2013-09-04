@@ -13,6 +13,7 @@ Description:
  This package provides combinators for producing
   XHTML 1.0, including the Strict, Transitional and Frameset variants.
 Build-Type: Simple
+Build-Depends: haskell-extras
 Exposed-Modules:
   Text.XHtml,
   Text.XHtml.Frameset,

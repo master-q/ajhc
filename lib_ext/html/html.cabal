@@ -9,6 +9,7 @@ description:
 	This package contains a combinator library for constructing
         HTML documents.
 build-type:     Simple
+Build-Depends:  haskell-extras
 exposed-modules:
 	Text.Html
 	Text.Html.BlockTable

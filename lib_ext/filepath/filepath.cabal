@@ -10,6 +10,7 @@ build-type:     Simple
 Synopsis:       Library for manipulating FilePaths in a cross platform way.
 cabal-version:  >=1.6
 Extra-Source-Files: System/FilePath/Internal.hs
+Build-Depends: haskell-extras
 
 Exposed-modules:
         System.FilePath

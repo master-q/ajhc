@@ -2,6 +2,7 @@ Name:                bytestring
 Version:             0.9.2.0
 Synopsis:            Fast, packed, strict and lazy byte arrays with a list interface
 Options: '-DMIN_VERSION_base(x,y,z)=0'
+Build-Depends: haskell-extras
 exposed-modules:
        - Data.ByteString
        - Data.ByteString.Char8

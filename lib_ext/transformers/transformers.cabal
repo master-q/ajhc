@@ -13,7 +13,7 @@ description:
     in Haskell 98 code, or with the monad classes in the @monads-fd@ or
     @monads-tf@ packages, which automatically lift operations introduced
     by monad transformers through other transformers.
-
+Build-Depends: haskell-extras, applicative
 exposed-modules:
     Control.Monad.IO.Class
     Control.Monad.Trans.Class

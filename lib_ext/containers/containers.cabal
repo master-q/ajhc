@@ -15,6 +15,7 @@ description:
 build-type: Simple
 extra-source-files: include/Typeable.h
 extensions: CPP
+Build-Depends: haskell-extras, applicative
 
 exposed-modules:
         Data.Graph

@@ -8,7 +8,7 @@ Description:
     HUnit is a unit testing framework for Haskell, inspired by the
     JUnit tool for Java, see: <http://www.junit.org>.
 
-Build-Depends: deepseq
+Build-Depends: haskell-extras, deepseq
 Exposed-Modules: Test.HUnit.Base,
         Test.HUnit.Lang,
         Test.HUnit.Terminal,

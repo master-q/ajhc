@@ -20,5 +20,5 @@ description:
     components) which defines strategies for fully evaluating different
     data types.
     .
-build-depends: containers
+build-depends: containers, haskell-extras
 exposed-modules: Control.DeepSeq
