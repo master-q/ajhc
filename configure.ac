@@ -71,6 +71,8 @@ jetcpath=${sysconfdir}/$PACKAGE-$SHORTVERSION
 
 JHCLIB_FILES=`find lib -type f | perl -e "while (<STDIN>) {chomp; print; print ' ';}"`
 AC_DEFINE_UNQUOTED(JHCLIB_FILES, "$JHCLIB_FILES", [jhc libraries dir])
+JAHM_RECIPE_FILES=`find jahm_recipe -type f | perl -e "while (<STDIN>) {chomp; print; print ' ';}"`
+AC_DEFINE_UNQUOTED(JAHM_RECIPE_FILES, "$JAHM_RECIPE_FILES")
 
 AC_DEFINE_DIR(LIBDIR,libdir)
 AC_DEFINE_DIR(DATADIR,datadir)
@@ -80,6 +82,7 @@ AC_DEFINE_DIR(JETCPATH,jetcpath)
 dnl AX_CREATE_STDINT_H([cbits/_stdint.h])
 
 AC_SUBST(JHCLIB_FILES)
+AC_SUBST(JAHM_RECIPE_FILES)
 AC_SUBST(BYTE_ORDER)
 AC_SUBST(EXTRA_PACKAGES)
 AC_SUBST(GHCFLAGS)
