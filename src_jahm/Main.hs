@@ -1,39 +1,30 @@
-{-- Jahm: Package installer for (A)jhc.
-
-   Copyright 2013 Metasepi team.
-   Contributed by Kiwamu Okabe <kiwamu@debian.or.jp>
-
-This file is part of Metasepi arafura <http://metasepi.masterq.net/>.
-
-Metasepi is free software; you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free
-Software Foundation; either version 2, or (at your option) any later
-version.
-
-Metasepi is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-for more details.
-
-You should have received a copy of the GNU General Public License
-along with Metasepi arafura; see the file metasepi-arafura/COPYING.
-If not see <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>.  --}
-
+{- Jahm: Jhc and Ajhc Haskell libraries Manager -}
 module Main where
+import Data.Maybe
+import Control.Monad
 import System.Environment (getArgs)
-import System.Directory (getCurrentDirectory)
+import System.Directory (getCurrentDirectory, findExecutable)
 import System.FilePath ((</>))
+import System.Exit
 import Network.URI (parseURI)
 import Distribution.Client.HttpUtils (downloadURI)
 import Distribution.Verbosity (verbose)
 import GenUtil (iocatch)
+import Support.CompatMingw32 (systemCompat)
 
 main :: IO ()
 main = getArgs >>= mainWorker
 
 mainWorker :: [String] -> IO ()
-mainWorker ("downloadURI":u:f:[]) = do curDir <- getCurrentDirectory
-                                       let Just url = parseURI u
-                                       retry $ downloadURI verbose url $ curDir </> f
-  where retry io = io `iocatch` const io
+mainWorker ("downloadURI":u:f:[]) = do
+  curDir <- getCurrentDirectory
+  let Just url = parseURI u
+  retry $ downloadURI verbose url $ curDir </> f
+    where retry io = io `iocatch` const io
+
+mainWorker ("make":a) = do
+  mayGmake <- findExecutable "gmake"
+  e <- systemCompat $ fromMaybe "make" mayGmake ++ " " ++ unwords a
+  when (e /= ExitSuccess) $ exitWith e
+
 mainWorker _ = print "help"

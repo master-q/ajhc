@@ -8,8 +8,6 @@ import System.FilePath ((</>), splitDirectories)
 import qualified System.FilePath.Posix as Px
 import Distribution.Package
 
-make verbosity = P.runProgramInvocation verbosity . P.simpleProgramInvocation "make"
-
 pName :: String
 pName = "@PACKAGE_NAME@"
 
@@ -24,6 +22,8 @@ jhcCmd local  = buildDir local </>  pName </>  pName
 jahmCmd local = buildDir local </> "jahm" </> "jahm"
 #endif
 
+jahmRun verbosity local = P.runProgramInvocation verbosity . P.simpleProgramInvocation (jahmCmd local)
+
 buildStdLib pkg local verbosity copy
     = do let dirs = L.absoluteInstallDirs pkg local copy
              idir = datadir dirs
@@ -36,8 +36,8 @@ buildStdLib pkg local verbosity copy
              exeExt = ""
 #endif
          putStrLn $ "Installing libraries in " ++ idir
-         make verbosity
-               [ "-f", "Makefile.cabalinst", "build"
+         jahmRun verbosity local
+               [ "make", "-f", "Makefile.cabalinst", "build"
                , "TARGET=" ++ idir
                , "JHCPROG=" ++ icmd
                , "JAHMPROG=" ++ jcmd
@@ -57,8 +57,8 @@ installStdLib pkg local verbosity copy
              exeExt = ""
 #endif
          putStrLn $ "Installing libraries in " ++ idir
-         make verbosity
-               [ "-f", "Makefile.cabalinst", "install"
+         jahmRun verbosity local
+               [ "make", "-f", "Makefile.cabalinst", "install"
                , "TARGET=" ++ idir
                , "JHCPROG=" ++ icmd
                , "JAHMPROG=" ++ jcmd
